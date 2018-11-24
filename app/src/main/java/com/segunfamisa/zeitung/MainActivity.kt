@@ -2,6 +2,7 @@ package com.segunfamisa.zeitung
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.segunfamisa.zeitung.ui.main.MainFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -11,7 +12,9 @@ class MainActivity : AppCompatActivity() {
 
         supportFragmentManager
             .beginTransaction()
-            .add(R.id.container, MainFragment(), MainFragment::class.toString())
+            .add(
+                R.id.container,
+                MainFragment(), MainFragment::class.toString())
             .commit()
     }
 }

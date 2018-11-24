@@ -1,10 +1,11 @@
-package com.segunfamisa.zeitung
+package com.segunfamisa.zeitung.ui.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.segunfamisa.zeitung.R
 
 class MainFragment : Fragment() {
 
