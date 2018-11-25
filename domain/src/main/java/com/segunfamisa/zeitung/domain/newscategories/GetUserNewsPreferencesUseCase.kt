@@ -4,8 +4,9 @@ import arrow.core.Either
 import com.segunfamisa.zeitung.domain.common.Error
 import com.segunfamisa.zeitung.domain.common.Result
 import com.segunfamisa.zeitung.domain.common.UseCase
+import javax.inject.Inject
 
-class GetPreferredNewsCategories(
+class GetUserNewsPreferencesUseCase @Inject constructor(
     private val preferencesRepository: NewsPreferencesRepository
 ) : UseCase<Unit, List<String>>() {
 

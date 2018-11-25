@@ -9,11 +9,11 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class GetPreferredNewsCategoriesTest {
+class GetUserNewsPreferencesUseCaseTest {
 
     private val repository: NewsPreferencesRepository = mock()
 
-    private val useCase = GetPreferredNewsCategories(preferencesRepository = repository)
+    private val useCase = GetUserNewsPreferencesUseCase(preferencesRepository = repository)
 
     @Test
     fun `use case gets preferred news categories from repository`() = runBlocking {
