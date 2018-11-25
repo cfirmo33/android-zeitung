@@ -4,6 +4,9 @@ import com.segunfamisa.zeitung.data.di.qualifiers.DataSource
 import com.segunfamisa.zeitung.data.headlines.HeadlinesRepositoryImpl
 import com.segunfamisa.zeitung.data.headlines.HeadlinesSource
 import com.segunfamisa.zeitung.data.headlines.RemoteHeadlinesSource
+import com.segunfamisa.zeitung.data.newspreferences.NewsPreferencesRepositoryImpl
+import com.segunfamisa.zeitung.data.newspreferences.NewsPreferencesSource
+import com.segunfamisa.zeitung.data.newspreferences.NewsPreferencesSourceImpl
 import com.segunfamisa.zeitung.data.newssources.NewsSourcesDataSource
 import com.segunfamisa.zeitung.data.newssources.NewsSourcesRepositoryImpl
 import com.segunfamisa.zeitung.data.newssources.RemoteNewsSourcesDataSource
@@ -14,6 +17,7 @@ import com.segunfamisa.zeitung.data.sources.remote.ApiServiceCreator
 import com.segunfamisa.zeitung.data.sources.remote.UrlProvider
 import com.segunfamisa.zeitung.data.sources.remote.UrlProviderImpl
 import com.segunfamisa.zeitung.domain.headlines.HeadlinesRepository
+import com.segunfamisa.zeitung.domain.newscategories.NewsPreferencesRepository
 import com.segunfamisa.zeitung.domain.newssources.NewsSourcesRepository
 import dagger.Binds
 import dagger.Module
@@ -53,6 +57,14 @@ abstract class DataModule {
     @Binds
     @DataSource(type = "remote")
     internal abstract fun bindRemoteNewsSourceDataSource(remoteDataSource: RemoteNewsSourcesDataSource): NewsSourcesDataSource
+
+    @Binds
+    @DataSource(type = "local")
+    internal abstract fun bindNewsPreferencesSource(newsPreferencesSource: NewsPreferencesSourceImpl): NewsPreferencesSource
+
+    @Binds
+    internal abstract fun bindNewsPreferencesRepository(newsPreferencesRepository: NewsPreferencesRepositoryImpl):
+        NewsPreferencesRepository
 
     // endregion
 }
