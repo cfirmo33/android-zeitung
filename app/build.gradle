@@ -43,6 +43,8 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$libs.daggerVersion"
 
     testImplementation "junit:junit:$testLibs.jUnitVersion"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$testLibs.mockitoKotlinVersion"
+    testImplementation "androidx.arch.core:core-testing:${libs.lifecycleExtensionVersion}"
     androidTestImplementation "androidx.test:runner:$testLibs.testRunnerVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$testLibs.espressoVersion"
 }
