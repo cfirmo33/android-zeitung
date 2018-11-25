@@ -4,4 +4,6 @@
     <string name="menu_news">News</string>
     <string name="menu_browse">Browse</string>
     <string name="menu_bookmarks">Saved</string>
+
+    <string name="title_news_preferences">Personalize</string>
 </resources>
