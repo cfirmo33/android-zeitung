@@ -11,15 +11,15 @@ import org.junit.Test
 
 class GetPreferredNewsCategoriesTest {
 
-    private val repository: NewsCategoriesRepository = mock()
+    private val repository: NewsPreferencesRepository = mock()
 
-    private val useCase = GetPreferredNewsCategories(categoriesRepository = repository)
+    private val useCase = GetPreferredNewsCategories(preferencesRepository = repository)
 
     @Test
     fun `use case gets preferred news categories from repository`() = runBlocking {
         // given that the repository returns a list of categories
         val categories = listOf("business", "technology")
-        whenever(repository.getNewsCategories()).thenReturn(
+        whenever(repository.getNewsPreferences()).thenReturn(
             Either.right(Result(data = categories))
         )
 

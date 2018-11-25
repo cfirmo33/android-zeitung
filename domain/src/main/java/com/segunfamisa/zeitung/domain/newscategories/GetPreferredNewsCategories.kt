@@ -6,11 +6,11 @@ import com.segunfamisa.zeitung.domain.common.Result
 import com.segunfamisa.zeitung.domain.common.UseCase
 
 class GetPreferredNewsCategories(
-    private val categoriesRepository: NewsCategoriesRepository
+    private val preferencesRepository: NewsPreferencesRepository
 ) : UseCase<Unit, List<String>>() {
 
     override suspend fun invoke(param: Unit): Either<Error, Result<out List<String>>> {
-        return categoriesRepository.getNewsCategories()
+        return preferencesRepository.getNewsPreferences()
     }
 
     override fun cancel() {
