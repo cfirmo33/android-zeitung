@@ -35,6 +35,10 @@ class NewsPreferencesViewModel @Inject constructor(
     val error: LiveData<Error>
         get() = _error
 
+    private val _loading = MutableLiveData<Boolean>()
+    val loading: LiveData<Boolean>
+        get() = _loading
+
     private val _newsPreferences = MutableLiveData<List<NewsPreferenceItem>>()
     val newsPreferences: LiveData<List<NewsPreferenceItem>>
         get() = _newsPreferences
@@ -44,6 +48,7 @@ class NewsPreferencesViewModel @Inject constructor(
     }
 
     private fun loadPreferences() {
+        showLoading(show = true)
         getSourcesJob = scope.launch(dispatcherProvider.io()) {
             val sources = getSourcesUseCase.invoke(param = NewsSourcesQueryParam())
             val categories = getAllCategoriesUseCase.invoke(param = Unit)
@@ -51,8 +56,10 @@ class NewsPreferencesViewModel @Inject constructor(
 
             transform(sources, categories, userPreferences)
                 .fold(ifLeft = { error ->
+                    showLoading(show = false)
                     _error.postValue(error)
                 }, ifRight = { result ->
+                    showLoading(show = false)
                     _newsPreferences.postValue(result)
                 })
         }
@@ -89,5 +96,9 @@ class NewsPreferencesViewModel @Inject constructor(
         } else {
             Either.right(out)
         }
+    }
+
+    private fun showLoading(show: Boolean) {
+        _loading.postValue(show)
     }
 }

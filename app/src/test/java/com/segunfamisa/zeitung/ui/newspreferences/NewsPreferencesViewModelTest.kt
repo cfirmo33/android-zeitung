@@ -1,12 +1,15 @@
 package com.segunfamisa.zeitung.ui.newspreferences
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.Observer
 import arrow.core.Either
+import com.nhaarman.mockitokotlin2.inOrder
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import com.segunfamisa.zeitung.TestCoroutineDispatcherProvider
 import com.segunfamisa.zeitung.core.entities.Category
 import com.segunfamisa.zeitung.core.entities.Source
+import com.segunfamisa.zeitung.domain.common.Error
 import com.segunfamisa.zeitung.domain.common.Result
 import com.segunfamisa.zeitung.domain.newscategories.GetAllCategoriesUseCase
 import com.segunfamisa.zeitung.domain.newscategories.GetUserNewsPreferencesUseCase
@@ -130,6 +133,70 @@ class NewsPreferencesViewModelTest {
             expectedPreferences,
             preferences!!
         )
+    }
+
+    @Test
+    fun `loading progress is shown at the beginning and hidden when the results are fetched`() = runBlocking {
+        // given that the use case can load sources successfully
+        val source1 = createSource()
+        val sources = listOf(source1)
+        whenever(getSourcesUseCase.invoke(param = NewsSourcesQueryParam()))
+            .thenReturn(Either.right(Result(data = sources)))
+
+        // given that the categories use case loads successfully
+        val categories = listOf(Category.Business(), Category.Entertainment())
+        whenever(getAllCategoriesUseCase.invoke(param = Unit))
+            .thenReturn(Either.right(Result(data = categories)))
+
+        // given that the user does not has previously selected a news source
+        whenever(getUserNewsPreferencesUseCase.invoke(param = Unit))
+            .thenReturn(Either.right(Result(data = listOf(source1.id))))
+
+        // given a view model
+        val viewModel = createViewModel()
+
+        // given that we are observing the view model
+        val observer = mock<Observer<Boolean>>()
+        viewModel.loading.observeForever(observer)
+
+        // when we init the view model
+        viewModel.init()
+
+        // then verify that we show the loading first and dismiss it after
+        val inOrder = inOrder(observer)
+        inOrder.verify(observer).onChanged(true)
+        inOrder.verify(observer).onChanged(false)
+    }
+
+    @Test
+    fun `loading progress is shown at the beginning and hidden if an error occurs`() = runBlocking {
+        // given that the use case can load sources successfully
+        val source1 = createSource()
+        whenever(getSourcesUseCase.invoke(param = NewsSourcesQueryParam()))
+            .thenReturn(Either.left(Error(message = "Unable to fetch news sources")))
+
+        // given that the categories use case loads successfully
+        whenever(getAllCategoriesUseCase.invoke(param = Unit))
+            .thenReturn(Either.left(Error(message = "Unable to fetch categories")))
+
+        // given that the user does not has previously selected a news source
+        whenever(getUserNewsPreferencesUseCase.invoke(param = Unit))
+            .thenReturn(Either.right(Result(data = listOf(source1.id))))
+
+        // given a view model
+        val viewModel = createViewModel()
+
+        // given that we are observing the view model
+        val observer = mock<Observer<Boolean>>()
+        viewModel.loading.observeForever(observer)
+
+        // when we init the view model
+        viewModel.init()
+
+        // then verify that we show the loading first and dismiss it after
+        val inOrder = inOrder(observer)
+        inOrder.verify(observer).onChanged(true)
+        inOrder.verify(observer).onChanged(false)
     }
 
     private fun createViewModel(): NewsPreferencesViewModel = NewsPreferencesViewModel(
