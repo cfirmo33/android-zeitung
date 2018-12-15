@@ -46,7 +46,9 @@ class NewsPreferencesViewModelTest {
             .thenReturn(Either.right(Result(data = listOf<String>())))
 
         // when we create the view model and check the preferences
-        val viewModel = createViewModel()
+        val viewModel = createViewModel().apply {
+            init()
+        }
         val preferences = viewModel.newsPreferences.value
 
         // then verify that we merge and emit the preferences
@@ -76,7 +78,9 @@ class NewsPreferencesViewModelTest {
             .thenReturn(Either.right(Result(data = listOf(Category.Business().category))))
 
         // when we create the view model and check the preferences
-        val viewModel = createViewModel()
+        val viewModel = createViewModel().apply {
+            init()
+        }
         val preferences = viewModel.newsPreferences.value
 
         // then verify that we emit the business category as checked
@@ -110,7 +114,9 @@ class NewsPreferencesViewModelTest {
             .thenReturn(Either.right(Result(data = listOf(source1.id))))
 
         // when we create the view model and check the preferences
-        val viewModel = createViewModel()
+        val viewModel = createViewModel().apply {
+            init()
+        }
         val preferences = viewModel.newsPreferences.value
 
         // then verify that we emit the business category as checked

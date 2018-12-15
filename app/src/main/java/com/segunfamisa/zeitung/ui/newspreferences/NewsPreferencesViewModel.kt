@@ -39,11 +39,11 @@ class NewsPreferencesViewModel @Inject constructor(
     val newsPreferences: LiveData<List<NewsPreferenceItem>>
         get() = _newsPreferences
 
-    init {
-        initPreferences()
+    fun init() {
+        loadPreferences()
     }
 
-    private fun initPreferences() {
+    private fun loadPreferences() {
         getSourcesJob = scope.launch(dispatcherProvider.io()) {
             val sources = getSourcesUseCase.invoke(param = NewsSourcesQueryParam())
             val categories = getAllCategoriesUseCase.invoke(param = Unit)
