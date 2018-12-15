@@ -51,9 +51,9 @@ class NewsPreferencesViewModelTest {
 
         // then verify that we merge and emit the preferences
         val expectedPreferences = listOf(
-            NewsSource(source = source1, isChecked = false),
             NewsCategory(category = Category.Business().category, isChecked = false),
-            NewsCategory(category = Category.Entertainment().category, isChecked = false)
+            NewsCategory(category = Category.Entertainment().category, isChecked = false),
+            NewsSource(source = source1, isChecked = false)
         )
         assertEquals(expectedPreferences, preferences!!)
     }
@@ -81,9 +81,9 @@ class NewsPreferencesViewModelTest {
 
         // then verify that we emit the business category as checked
         val expectedPreferences = listOf(
-            NewsSource(source = source1, isChecked = false),
             NewsCategory(category = Category.Business().category, isChecked = true),
-            NewsCategory(category = Category.Entertainment().category, isChecked = false)
+            NewsCategory(category = Category.Entertainment().category, isChecked = false),
+            NewsSource(source = source1, isChecked = false)
         )
         assertEquals(
             "only the business category should be checked",
@@ -115,9 +115,9 @@ class NewsPreferencesViewModelTest {
 
         // then verify that we emit the business category as checked
         val expectedPreferences = listOf(
-            NewsSource(source = source1, isChecked = true),
             NewsCategory(category = Category.Business().category, isChecked = false),
-            NewsCategory(category = Category.Entertainment().category, isChecked = false)
+            NewsCategory(category = Category.Entertainment().category, isChecked = false),
+            NewsSource(source = source1, isChecked = true)
         )
         assertEquals(
             "only the matching news source should be marked as checked",
