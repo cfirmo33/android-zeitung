@@ -75,6 +75,13 @@ class NewsPreferencesViewModel @Inject constructor(
         val userPreferencesData = userPreferences.orNull()?.data ?: listOf()
 
         val out = listOf(
+            categoriesData
+                .map { it ->
+                    NewsCategory(
+                        category = it.category,
+                        isChecked = userPreferencesData.contains(it.category)
+                    )
+                },
             sourceData
                 .map { source ->
                     NewsSource(
