@@ -88,13 +88,6 @@ class NewsPreferencesViewModel @Inject constructor(
                         source = source,
                         isChecked = userPreferencesData.contains(source.id)
                     )
-                },
-            categoriesData
-                .map { it ->
-                    NewsCategory(
-                        category = it.category,
-                        isChecked = userPreferencesData.contains(it.category)
-                    )
                 }
         ).flatten()
 
